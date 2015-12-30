@@ -37,10 +37,14 @@ class qtype_linkerdescription_edit_form extends question_edit_form {
      * @param MoodleQuickForm $mform the form being built.
      */
     protected function definition_inner($mform) {
-        // We don't need this default element.
+        // We don't need those default element.
         $mform->removeElement('defaultmark');
         $mform->addElement('hidden', 'defaultmark', 0);
         $mform->setType('defaultmark', PARAM_RAW);
+
+        $mform->removeElement('generalfeedback');
+        $mform->addElement('hidden', 'generalfeedback');
+        $mform->setType('generalfeedback', PARAM_RAW);
     }
 
     public function qtype() {
