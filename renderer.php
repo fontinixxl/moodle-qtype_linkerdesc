@@ -18,8 +18,8 @@
  * Description 'question' renderer class.
  *
  * @package    qtype
- * @subpackage linkerdescription
- * @copyright  2009 The Open University
+ * @subpackage linkerdesc
+ * @copyright  2016 Gerard Cuello <gerard.urv@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,9 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Generates the output for linkerdescription 'question's.
+ * Generates the output for linkerdesc 'question's.
  */
-class qtype_linkerdescription_renderer extends qtype_renderer {
+class qtype_linkerdesc_renderer extends qtype_renderer {
     public function formulation_and_controls(question_attempt $qa,
             question_display_options $options) {
 
@@ -39,6 +39,6 @@ class qtype_linkerdescription_renderer extends qtype_renderer {
     }
 
     public function formulation_heading() {
-        return get_string('informationtext', 'qtype_linkerdescription');
+        return get_string('informationtext', 'qtype_linkerdesc');
     }
 }

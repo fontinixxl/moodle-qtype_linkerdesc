@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Unit tests for the linkerdescription question type class.
+ * Unit tests for the linkerdesc question type class.
  *
- * @package    qtype_linkerdescription
+ * @package    qtype_linkerdesc
  * @copyright  2013 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,23 +26,23 @@
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot . '/question/type/linkerdescription/questiontype.php');
+require_once($CFG->dirroot . '/question/type/linkerdesc/questiontype.php');
 require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 require_once($CFG->dirroot . '/question/type/edit_question_form.php');
-require_once($CFG->dirroot . '/question/type/linkerdescription/edit_linkerdescription_form.php');
+require_once($CFG->dirroot . '/question/type/linkerdesc/edit_linkerdesc_form.php');
 
 
 /**
- * Unit tests for the linkerdescription question type class.
+ * Unit tests for the linkerdesc question type class.
  *
  * @copyright  2013 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_linkerdescription_test extends advanced_testcase {
+class qtype_linkerdesc_test extends advanced_testcase {
     protected $qtype;
 
     protected function setUp() {
-        $this->qtype = new qtype_linkerdescription();
+        $this->qtype = new qtype_linkerdesc();
     }
 
     protected function tearDown() {
@@ -50,7 +50,7 @@ class qtype_linkerdescription_test extends advanced_testcase {
     }
 
     public function test_name() {
-        $this->assertEquals($this->qtype->name(), 'linkerdescription');
+        $this->assertEquals($this->qtype->name(), 'linkerdesc');
     }
 
     public function test_actual_number_of_questions() {
@@ -74,16 +74,16 @@ class qtype_linkerdescription_test extends advanced_testcase {
         $this->resetAfterTest(true);
         $this->setAdminUser();
 
-        $questiondata = test_question_maker::get_question_data('linkerdescription');
-        $formdata = test_question_maker::get_question_form_data('linkerdescription');
+        $questiondata = test_question_maker::get_question_data('linkerdesc');
+        $formdata = test_question_maker::get_question_form_data('linkerdesc');
 
         $generator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $cat = $generator->create_question_category(array());
 
         $formdata->category = "{$cat->id},{$cat->contextid}";
-        qtype_linkerdescription_edit_form::mock_submit((array)$formdata);
+        qtype_linkerdesc_edit_form::mock_submit((array)$formdata);
 
-        $form = qtype_linkerdescription_test_helper::get_question_editing_form($cat, $questiondata);
+        $form = qtype_linkerdesc_test_helper::get_question_editing_form($cat, $questiondata);
 
         $this->assertTrue($form->is_validated());
 

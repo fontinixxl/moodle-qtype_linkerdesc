@@ -15,25 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for the linkerdescription 'question' type.
+ * Version information for the linkerdesc 'question' type.
  *
  * @package    qtype
- * @subpackage linkerdescription
- * @copyright  2016 Gerard Cuello
+ * @subpackage linkerdesc
+ * @copyright  2016 Gerard Cuello <gerard.urv@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'qtype_linkerdescription';
-$plugin->version   = 2015122900;
-
+$plugin->component = 'qtype_linkerdesc';
+$plugin->version   = 2016011902;
 $plugin->requires  = 2015111000;
-
 $plugin->maturity  = MATURITY_ALPHA;
-
-$plugin->release = '';
-//TODO: add plugin dependencies
+$plugin->release = '0.1';
 $plugin->dependencies = array(
-    
+    'qtype_programmedresp'  => 2016021800,
 );

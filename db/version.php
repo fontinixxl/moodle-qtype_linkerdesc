@@ -15,19 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Description 'question' definition class.
+ * programmedresp question type version information.
  *
  * @package    qtype
  * @subpackage linkerdesc
- * @copyright  2016 Gerard Cuello <gerard.urv@gmail.com>
+ * @copyright  2014 Gerard Cuello (<gerard.urv@gmail.com>)
+
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Represents a linkerdesc 'question'.
- */
-class qtype_linkerdesc_question extends question_information_item {
-}
+$plugin->component = 'qtype_linkerdesc';
+$plugin->version   = 2014081400;
+$plugin->requires  = 2014050800;
+$plugin->maturity  = MATURITY_BETA;

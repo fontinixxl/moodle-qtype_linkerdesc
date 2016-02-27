@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,24 +16,92 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Question type class for the linkerdescription 'question' type.
+ * Question type class for the linkerdesc 'question' type.
  *
  * @package    qtype
- * @subpackage linkerdescription
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @subpackage linkerdesc
+ * @copyright  2016 Gerard Cuello <gerard.urv@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/questionlib.php');
-
+require_once($CFG->dirroot . '/question/type/programmedresp/questiontype.php');
+require_once($CFG->dirroot . '/question/type/programmedresp/lib.php');
 
 /**
- * The linkerdescription 'question' type.
+ * This class use programmedresp/questiontype.php as a
+ * base class to either get question options and save question vars.
+ * TODO: translate it!
+ * Té la única funció de vincualar la propia pregunta amb el questionari on
+ * s'ha afegit.D'aquesta manera des del programmedresp podrem obtindre les variables
+ * linker vinculades a un quiz en particular.
  */
-class qtype_linkerdescription extends question_type {
+class qtype_linkerdesc extends qtype_programmedresp {
+
+    public function get_question_options($question) {
+        global $DB;
+        $question->options = new stdClass();
+        $question->options->vars = $DB->get_records('qtype_programmedresp_var', array('question' => $question->id));
+        $question->options->concatvars = $DB->get_records_select('qtype_programmedresp_conc', 'question = ?', array($question->id));
+    }
+
+    public function save_question_options($question) {
+        global $DB;
+
+        parent::save_question_options($question);
+
+        $quizid = self::get_quiz_id();
+
+        if (!$quizid) {
+            return;
+        }
+
+        if (!$DB->get_record('qtype_linkerdesc_quiz', array('quiz' => $quizid, 'question' => $question->id))) {
+            $data = new stdClass();
+            $data->quiz = $quizid;
+            $data->question = $question->id;
+            if (!$DB->insert_record('qtype_linkerdesc_quiz', $data)) {
+                print_error('errordb', 'qtype_linkerdesc_quiz');
+            }
+        }
+
+        // TODO: return object $result->error or $result->notice
+    }
+
+    public static function get_quiz_id() {
+        $cmid = optional_param('cmid', 0, PARAM_INT);
+        if (!$cmid) {
+            return false;
+        }
+        list($module, $cm) = get_module_from_cmid($cmid);
+
+        if (!$cm->modname == 'quiz') {
+            return false;
+        }
+
+        return $module->id;
+    }
+
+    public function actual_number_of_questions($question) {
+        // Used for the feature number-of-questions-per-page
+        // to determine the actual number of questions wrapped by this question.
+        // The question type linkerdesc is not even a question
+        // in itself so it will return ZERO!
+        return 0;
+    }
+
+    public function get_random_guess_score($questiondata) {
+        return null;
+    }
+
+    /**
+     * @return null to tell the base class to do nothing
+     */
+    public function extra_question_fields() {
+        return null;
+    }
+
     public function is_real_question_type() {
         return false;
     }
@@ -45,22 +114,4 @@ class qtype_linkerdescription extends question_type {
         return false;
     }
 
-    public function save_question($question, $form) {
-        // Make very sure that linkerdescriptions can'e be created with a grade of
-        // anything other than 0.
-        $form->defaultmark = 0;
-        return parent::save_question($question, $form);
-    }
-
-    public function actual_number_of_questions($question) {
-        // Used for the feature number-of-questions-per-page
-        // to determine the actual number of questions wrapped by this question.
-        // The question type linkerdescription is not even a question
-        // in itself so it will return ZERO!
-        return 0;
-    }
-
-    public function get_random_guess_score($questiondata) {
-        return null;
-    }
 }

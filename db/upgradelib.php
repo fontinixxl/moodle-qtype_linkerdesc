@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Upgrade library code for the linkerdescription question type.
+ * Upgrade library code for the linkerdesc question type.
  *
  * @package    qtype
- * @subpackage linkerdescription
- * @copyright  2016 Gerard Cuello
+ * @subpackage linkerdesc
+ * @copyright  2016 Gerard Cuello <gerard.urv@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,13 +28,13 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Class for converting attempt data for linkerdescription questions when upgrading
+ * Class for converting attempt data for linkerdesc questions when upgrading
  * attempts to the new question engine.
  *
  * This class is used by the code in question/engine/upgrade/upgradelib.php.
  *
  */
-class qtype_linkerdescription_qe2_attempt_updater extends question_qtype_attempt_updater {
+class qtype_linkerdesc_qe2_attempt_updater extends question_qtype_attempt_updater {
     public function right_answer() {
         return '';
     }

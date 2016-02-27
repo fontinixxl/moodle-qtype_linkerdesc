@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Test helper code for the linkerdescription question type.
+ * Test helper code for the linkerdesc question type.
  *
- * @package    qtype_linkerdescription
+ * @package    qtype_linkerdesc
  * @copyright  2013 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,22 +27,22 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Test helper class for the linkerdescription question type.
+ * Test helper class for the linkerdesc question type.
  *
  * @copyright  2013 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_linkerdescription_test_helper extends question_test_helper {
+class qtype_linkerdesc_test_helper extends question_test_helper {
     public function get_test_questions() {
         return array('info');
     }
 
     /**
-     * @return qtype_linkerdescription_question
+     * @return qtype_linkerdesc_question
      */
-    public static function make_linkerdescription_question_info() {
-        question_bank::load_question_definition_classes('linkerdescription');
-        $q = new qtype_linkerdescription_question();
+    public static function make_linkerdesc_question_info() {
+        question_bank::load_question_definition_classes('linkerdesc');
+        $q = new qtype_linkerdesc_question();
 
         test_question_maker::initialise_a_question($q);
         $q->defaultmark = 0;
@@ -52,7 +52,7 @@ class qtype_linkerdescription_test_helper extends question_test_helper {
         $q->name = 'Description';
         $q->questiontext = 'Here is some information about the questions you are about to attempt.';
         $q->generalfeedback = 'And here is some more text shown only on the review page.';
-        $q->qtype = question_bank::get_qtype('linkerdescription');
+        $q->qtype = question_bank::get_qtype('linkerdesc');
 
         return $q;
     }
@@ -61,7 +61,7 @@ class qtype_linkerdescription_test_helper extends question_test_helper {
      * Get the question data, as it would be loaded by get_question_options.
      * @return object
      */
-    public static function get_linkerdescription_question_data_info() {
+    public static function get_linkerdesc_question_data_info() {
         global $USER;
 
         $qdata = new stdClass();
@@ -75,7 +75,7 @@ class qtype_linkerdescription_test_helper extends question_test_helper {
         $qdata->timemodified = time();
         $qdata->createdby = $USER->id;
         $qdata->modifiedby = $USER->id;
-        $qdata->qtype = 'linkerdescription';
+        $qdata->qtype = 'linkerdesc';
         $qdata->name = 'Description';
         $qdata->questiontext = 'Here is some information about the questions you are about to attempt.';
         $qdata->questiontextformat = FORMAT_HTML;
@@ -97,7 +97,7 @@ class qtype_linkerdescription_test_helper extends question_test_helper {
      * Get the question form data.
      * @return object
      */
-    public static function get_linkerdescription_question_form_data_info() {
+    public static function get_linkerdesc_question_form_data_info() {
         $form = new stdClass();
 
         $form->name = 'Description';
