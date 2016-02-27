@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/fontinixxl/moodle-qtype_linkerdesc.png?label=ready&title=Ready)](https://waffle.io/fontinixxl/moodle-qtype_linkerdesc)
 # moodle-qtype_linkerdesc
 This question type is used as common statement of a Quiz module. It's based on qtype_description and inherit most of the code from
 qtype_programmedresp (<https://github.com/fontinixxl/moodle-qtype_programmedresp.git>).   
