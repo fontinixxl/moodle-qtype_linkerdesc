@@ -26,10 +26,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_linkerdesc';
-$plugin->version   = 2016011902;
+$plugin->version   = 2016031200;
 $plugin->requires  = 2015111000;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->release = '0.1';
+$plugin->maturity  = MATURITY_BETA;
+$plugin->release = '0.2';
 $plugin->dependencies = array(
     'qtype_programmedresp'  => 2016021800,
 );

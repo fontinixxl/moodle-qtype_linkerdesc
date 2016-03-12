@@ -45,42 +45,30 @@ class qtype_linkerdesc extends qtype_programmedresp {
         $question->options->vars = $DB->get_records('qtype_programmedresp_var', array('question' => $question->id));
         $question->options->concatvars = $DB->get_records_select('qtype_programmedresp_conc', 'question = ?', array($question->id));
     }
+    protected function initialise_question_instance(\question_definition $question, $questiondata) {
+        $question->id = $questiondata->id;
+        $question->category = $questiondata->category;
+        $question->contextid = $questiondata->contextid;
+        $question->parent = $questiondata->parent;
+        $question->qtype = $this;
+        $question->name = $questiondata->name;
+        $question->questiontext = $questiondata->questiontext;
+        $question->questiontextformat = $questiondata->questiontextformat;
+        $question->generalfeedback = $questiondata->generalfeedback;
+        $question->generalfeedbackformat = $questiondata->generalfeedbackformat;
+        $question->defaultmark = $questiondata->defaultmark + 0;
+        $question->length = $questiondata->length;
+        $question->penalty = $questiondata->penalty;
+        $question->stamp = $questiondata->stamp;
+        $question->version = $questiondata->version;
+        $question->hidden = $questiondata->hidden;
+        $question->timecreated = $questiondata->timecreated;
+        $question->timemodified = $questiondata->timemodified;
+        $question->createdby = $questiondata->createdby;
+        $question->modifiedby = $questiondata->modifiedby;
 
-    public function save_question_options($question) {
-        global $DB;
-
-        parent::save_question_options($question);
-
-        $quizid = self::get_quiz_id();
-
-        if (!$quizid) {
-            return;
-        }
-
-        if (!$DB->get_record('qtype_linkerdesc_quiz', array('quiz' => $quizid, 'question' => $question->id))) {
-            $data = new stdClass();
-            $data->quiz = $quizid;
-            $data->question = $question->id;
-            if (!$DB->insert_record('qtype_linkerdesc_quiz', $data)) {
-                print_error('errordb', 'qtype_linkerdesc_quiz');
-            }
-        }
-
-        // TODO: return object $result->error or $result->notice
-    }
-
-    public static function get_quiz_id() {
-        $cmid = optional_param('cmid', 0, PARAM_INT);
-        if (!$cmid) {
-            return false;
-        }
-        list($module, $cm) = get_module_from_cmid($cmid);
-
-        if (!$cm->modname == 'quiz') {
-            return false;
-        }
-
-        return $module->id;
+        $question->vars = ($questiondata->options->vars) ? $questiondata->options->vars : array();
+        // Only programmedresp qtype
     }
 
     public function actual_number_of_questions($question) {
