@@ -71,6 +71,10 @@ class qtype_linkerdesc extends qtype_programmedresp {
         // Only programmedresp qtype
     }
 
+    public function delete_question($questionid, $contextid) {
+        return true;
+    }
+
     public function actual_number_of_questions($question) {
         // Used for the feature number-of-questions-per-page
         // to determine the actual number of questions wrapped by this question.

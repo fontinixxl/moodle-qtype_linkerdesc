@@ -57,6 +57,11 @@ class qtype_linkerdesc_edit_form extends question_edit_form {
         "this.wwwroot = '" . $CFG->wwwroot . "';\n" .
         "//]]></script>\n";
 
+        // TODO: Refacor
+        // context id will be required on contents.php once it will called by AJAX (script.js)
+        $mform->addElement('hidden', 'contextid', $PAGE->context->id);
+        $mform->setType('contextid', PARAM_INT);
+
         $outputmanager = new prgrammedresp_output($mform);
         $editingjsparam = 'false';
         // In a new question the vars div should be loaded
