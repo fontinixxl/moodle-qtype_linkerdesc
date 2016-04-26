@@ -11,9 +11,11 @@ It must be installed before it.
 ## Changelog
 ### v1.0
 - Add: Backup/Restore functionaliy.
+
 ### v0.2
 - Code refactor.
 - Deleted all question tables. They are not needed anymore.
+
 ### v0.1
 - Add a qtype_linkerdesc in a quiz module.
 - Add vars (simple and concatenated) on common statment. These will be available for qtype_programmedresp.
