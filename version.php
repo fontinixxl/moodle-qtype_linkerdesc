@@ -29,7 +29,7 @@ $plugin->component = 'qtype_linkerdesc';
 $plugin->version   = 2016041900;
 $plugin->requires  = 2015111000;
 $plugin->maturity  = MATURITY_BETA;
-$plugin->release = '0.3';
+$plugin->release = '1.0';
 $plugin->dependencies = array(
     'qtype_programmedresp'  => 2016021800,
 );
