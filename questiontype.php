@@ -42,8 +42,10 @@ class qtype_linkerdesc extends qtype_programmedresp {
     public function get_question_options($question) {
         global $DB;
         $question->options = new stdClass();
-        $question->options->vars = $DB->get_records('qtype_programmedresp_var', array('question' => $question->id));
-        $question->options->concatvars = $DB->get_records_select('qtype_programmedresp_conc', 'question = ?', array($question->id));
+        $question->options->vars = $DB->get_records('qtype_programmedresp_var',
+            array('question' => $question->id));
+        $question->options->concatvars = $DB->get_records_select('qtype_programmedresp_conc',
+            'question = ?', array($question->id));
     }
     protected function initialise_question_instance(\question_definition $question, $questiondata) {
         $question->id = $questiondata->id;
@@ -56,9 +58,8 @@ class qtype_linkerdesc extends qtype_programmedresp {
         $question->questiontextformat = $questiondata->questiontextformat;
         $question->generalfeedback = $questiondata->generalfeedback;
         $question->generalfeedbackformat = $questiondata->generalfeedbackformat;
-        $question->defaultmark = $questiondata->defaultmark + 0;
+        $question->defaultmark = 0;
         $question->length = $questiondata->length;
-        $question->penalty = $questiondata->penalty;
         $question->stamp = $questiondata->stamp;
         $question->version = $questiondata->version;
         $question->hidden = $questiondata->hidden;
@@ -68,7 +69,13 @@ class qtype_linkerdesc extends qtype_programmedresp {
         $question->modifiedby = $questiondata->modifiedby;
 
         $question->vars = ($questiondata->options->vars) ? $questiondata->options->vars : array();
-        // Only programmedresp qtype
+    }
+
+    public function save_question($question, $form) {
+        // Make very sure that descriptions can'e be created with a grade of
+        // anything other than 0.
+        $form->defaultmark = 0;
+        return parent::save_question($question, $form);
     }
 
     public function delete_question($questionid, $contextid) {
