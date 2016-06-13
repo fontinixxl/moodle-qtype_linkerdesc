@@ -67,6 +67,18 @@ class restore_qtype_linkerdesc_plugin extends restore_qtype_plugin {
         $questioncreated = $this->get_mappingid('question_created', $oldquestionid) ?
             true : false;
 
+        // Find out whether this var has yet inserted.
+        // Si la variable ha sigut restaurada previament per una pregunta
+        // programada (xq l'utilitzava com a argument) Hem d'actualitzar el questionid amb
+        // el nou d'aquesta pregunta.
+        if ($newvarid = $this->get_mappingid('var', $oldid)){
+            $var = new stdClass();
+            $var->id = $newvarid;
+            $var->question = $newquestionid;
+            $DB->update_record('qtype_programmedresp_var', $var);
+
+            return true;
+        }
         // If the question has been created by restore, we need to create its
         // vars too.
         if ($questioncreated) {
@@ -76,6 +88,9 @@ class restore_qtype_linkerdesc_plugin extends restore_qtype_plugin {
             // TODO: Ensure there aren't vars with the same name
             $newitemid = $DB->insert_record('qtype_programmedresp_var', $data);
 
+            // Mapping the old var id with the new inserted one.
+            // It might will be used later by qtype_programmedresp to get the correct var id for its arg.
+            $this->set_mapping('var', $oldid, $newitemid);
         }
 
     }
@@ -92,6 +107,16 @@ class restore_qtype_linkerdesc_plugin extends restore_qtype_plugin {
         $questioncreated = $this->get_mappingid('question_created', $oldquestionid) ?
             true : false;
 
+        // The same as  process_var
+        if ($newconcatid = $this->get_mappingid('concatvar', $oldid)){
+            $concatvar = new stdClass();
+            $concatvar->id = $newconcatid;
+            $concatvar->question = $newquestionid;
+            $DB->update_record('qtype_programmedresp_conc', $concatvar);
+
+            return true;
+        }
+
         // If the question has been created by restore, we need to create its
         // concatenated vars too.
         if ($questioncreated) {
@@ -99,6 +124,10 @@ class restore_qtype_linkerdesc_plugin extends restore_qtype_plugin {
             $data->question = $newquestionid;
             // Insert record.
             $newitemid = $DB->insert_record('qtype_programmedresp_conc', $data);
+
+            // Mapping the old var id with the new inserted one.
+            // It might will be used later by qtype_programmedresp to get the correct var id for its arg.
+            $this->set_mapping('concatvar', $oldid, $newitemid);
         }
     }
 }
